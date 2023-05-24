@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<project name="take" default="deploy">
+	<property name="jboss.home" value="c:/take/wildfly-10.1.0.Final" />
+
+	<path id="compile.classpath">
+		<fileset dir="WebContent/WEB-INF/lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${jboss.home}/common/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="dist" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="dist" />
+	</target>
+	<target name="war" depends="init">
+		<war destfile="dist/${ant.project.name}.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent" />
+		</war>
+	</target>
+
+	<target name="deploy" depends="war">
+		<copy file="dist/${ant.project.name}.war" todir="${jboss.home}/standalone/deployments" />
+	</target>
+</project>
