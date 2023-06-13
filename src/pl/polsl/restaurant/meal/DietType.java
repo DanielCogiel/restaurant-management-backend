@@ -1,4 +1,4 @@
-package pl.polsl.restaurant;
+package pl.polsl.restaurant.meal;
 
 public enum DietType {
 	VEGETARIAN,

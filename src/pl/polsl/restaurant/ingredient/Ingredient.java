@@ -1,4 +1,4 @@
-package pl.polsl.restaurant;
+package pl.polsl.restaurant.ingredient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import pl.polsl.restaurant.meal.Meal;
 
 
 @Entity

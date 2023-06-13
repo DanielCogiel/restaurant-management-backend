@@ -1,4 +1,4 @@
-package pl.polsl.restaurant;
+package pl.polsl.restaurant.customer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import pl.polsl.restaurant.order.Order;
 
 @Entity
 @Table(name="CUSTOMERS")

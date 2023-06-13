@@ -1,4 +1,4 @@
-package pl.polsl.restaurant;
+package pl.polsl.restaurant.meal;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -10,6 +10,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import pl.polsl.restaurant.ingredient.Ingredient;
 
 @Entity
 @Table(name="MEALS")
