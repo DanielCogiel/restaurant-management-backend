@@ -5,14 +5,17 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import pl.polsl.restaurant.customer.customerDtos.CustomerCreateDto;
 import pl.polsl.restaurant.customer.customerDtos.CustomerDto;
+import pl.polsl.restaurant.customer.customerDtos.CustomerUpdateDto;
 
 @Path(value="customers")
 @Consumes({ "application/json" })
@@ -70,4 +73,35 @@ public class CustomerRest implements CustomerRestInterface {
 		return new CustomerDto(customer.getId(), customer.getName(), customer.getSurname(), 
 				customer.getTable_number(), customer.getOrders());
 	}
+	
+	@Override
+	@DELETE
+	@Path(value="/{id}")
+	public NotifierDto delete(@PathParam("id") int id) {
+		try {
+			this.customerBean.delete(id);
+			return new NotifierDto("Successfully deleted customer.");
+		} catch (Exception e) {
+			return new NotifierDto("Could not delete given customer.");
+		}
+	}
+	
+	@Override
+	@PUT
+	public NotifierDto update(CustomerUpdateDto updatedCustomer) {
+		try {
+			Customer currentCustomer = this.customerBean.find(updatedCustomer.getId());
+			if (updatedCustomer.getName() != null) 
+				currentCustomer.setName(updatedCustomer.getName());
+			if (updatedCustomer.getSurname() != null) 
+				currentCustomer.setSurname(updatedCustomer.getSurname());
+			if (updatedCustomer.getTable_number() != 0) 
+				currentCustomer.setTable_number(updatedCustomer.getTable_number());
+			this.customerBean.update(currentCustomer);
+			return new NotifierDto("Successfully updated customer.");
+		} catch (Exception e) {
+			return new NotifierDto("Could not update given customer.");
+		}
+	}
+	
  }
