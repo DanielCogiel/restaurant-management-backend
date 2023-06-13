@@ -16,18 +16,13 @@ import javax.ws.rs.Produces;
 import pl.polsl.restaurant.customer.customerDtos.CustomerCreateDto;
 import pl.polsl.restaurant.customer.customerDtos.CustomerDto;
 import pl.polsl.restaurant.customer.customerDtos.CustomerUpdateDto;
+import pl.polsl.restaurant.util.NotifierDto;
+import pl.polsl.restaurant.util.RestInterface;
 
 @Path(value="customers")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
-public class CustomerRest implements CustomerRestInterface {
-	
-//	@Override
-//	@POST
-//	public CustomerDto create(CustomerCreateDto createCustomer) {
-//		return
-//	}
-	
+public class CustomerRest implements RestInterface<CustomerDto, CustomerCreateDto, CustomerUpdateDto> {
 	@EJB
 	CustomerEjb customerBean;
 	

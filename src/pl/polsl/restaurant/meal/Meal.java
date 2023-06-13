@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,12 +24,12 @@ public class Meal implements Serializable {
 	DietType dietType;
 	Set<Ingredient> ingredients = new HashSet<Ingredient>();
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name="MEAL_INGR",
     joinColumns=
-        @JoinColumn(name="MEAL_ID", referencedColumnName="ID"),
+        @JoinColumn(name="MEAL_ID"), //referencedColumnName?
     inverseJoinColumns=
-        @JoinColumn(name="INGR_ID", referencedColumnName="ID")
+        @JoinColumn(name="INGR_ID")
     )
 	public Set<Ingredient> getIngredients() {
 		return ingredients;

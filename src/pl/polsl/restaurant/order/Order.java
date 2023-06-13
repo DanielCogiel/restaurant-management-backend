@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,7 +25,7 @@ public class Order implements Serializable {
 	List<Meal> meals = new ArrayList<Meal>();
 	Customer customer;
 
-	@OneToMany
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public List<Meal> getMeals() {
 		return meals;
 	}
@@ -32,9 +35,10 @@ public class Order implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name="CUSTOMER_ID", referencedColumnName="id")
 	public Customer getCustomer() {
 		return customer;
-	}
+	}	
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;

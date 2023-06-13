@@ -1,4 +1,4 @@
-package pl.polsl.restaurant.customer;
+package pl.polsl.restaurant.util;
 
 public class NotifierDto {
 	private String message;
