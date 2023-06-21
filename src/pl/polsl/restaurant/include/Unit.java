@@ -1,4 +1,4 @@
-package pl.polsl.restaurant.ingredient;
+package pl.polsl.restaurant.include;
 
 public enum Unit {
 	KG, G, DAG, L, ML, NO_UNIT
