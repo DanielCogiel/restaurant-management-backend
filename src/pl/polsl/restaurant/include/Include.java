@@ -33,20 +33,20 @@ public class Include implements Serializable {
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
-	@ManyToOne(mappedBy="includes")
-	public Set<Meal> getMeals() {
-		return meals;
+	@ManyToOne
+	public Meal getMeal() {
+		return meal;
 	}
-	public void setMeals(Set<Meal> meals) {
-		this.meals = meals;
+	public void setMeal(Meal meal) {
+		this.meal = meal;
 	}
 	
-	@ManyToOne(mappedBy="includes")
-	public Set<Ingredient> getIndredients() {
-		return ingredients;
+	@ManyToOne
+	public Ingredient getIndredient() {
+		return ingredient;
 	}
-	public void setIngredients(Set<Ingredient> ingredients) {
-		this.ingredients = ingredients;
+	public void setIngredient(Ingredient ingredient) {
+		this.ingredient = ingredient;
 	}
 	
 	@Id

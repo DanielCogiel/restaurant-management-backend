@@ -6,8 +6,10 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import pl.polsl.restaurant.include.Include;
 import pl.polsl.restaurant.meal.Meal;
 
 
@@ -17,28 +19,15 @@ public class Ingredient implements Serializable {
 	int id;
 	String name;
 	boolean isGluten;
-	Set<Meal> meals = new HashSet<Meal>();
-	double amount;
-	Unit unit;
+	Set<Include> includes = new HashSet<Include>();
 	
-	public double getAmount() {
-		return amount;
+
+	@OneToMany(mappedBy="ingredient")
+	public Set<Include> getIncludes() {
+		return includes;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-	public Unit getUnit() {
-		return unit;
-	}
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
-	@ManyToMany(mappedBy="ingredients")
-	public Set<Meal> getMeals() {
-		return meals;
-	}
-	public void setMeals(Set<Meal> meals) {
-		this.meals = meals;
+	public void setIncludes(Set<Include> includes) {
+		this.includes = includes;
 	}
 	@Id
 	public int getId() {
