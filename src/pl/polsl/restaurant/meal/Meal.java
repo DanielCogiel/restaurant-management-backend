@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
@@ -43,6 +44,7 @@ public class Meal implements Serializable {
 	}
 	
 	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}

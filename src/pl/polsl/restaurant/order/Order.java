@@ -41,6 +41,7 @@ public class Order implements Serializable {
 	}
 
 	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}

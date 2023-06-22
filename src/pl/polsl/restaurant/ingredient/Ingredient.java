@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -30,6 +31,7 @@ public class Ingredient implements Serializable {
 		this.includes = includes;
 	}
 	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}

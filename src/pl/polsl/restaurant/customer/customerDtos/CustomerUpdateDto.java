@@ -6,6 +6,7 @@ public class CustomerUpdateDto {
 	private String surname;
 	private int table_number;
 	
+	public CustomerUpdateDto() {}
 	public CustomerUpdateDto(int id, String name, String surname, int table_number) {
 		this.id = id;
 		this.name = name;

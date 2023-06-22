@@ -13,6 +13,6 @@ public interface CustomerRestInterface {
 	public abstract CustomerDto create(CustomerCreateDto createCustomer);
 	public abstract CustomerDto find(int id); //CustomerDto
 	public abstract ArrayList<CustomerDto> get();
-//	public abstract String update(CustomerUpdateDto updatedCustomer);
-//	public abstract String delete(int id);
+	public abstract NotifierDto update(CustomerUpdateDto updatedCustomer);
+	public abstract NotifierDto delete(int id);
 }
