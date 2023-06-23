@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.polsl.restaurant.customer.Customer;
-import pl.polsl.restaurant.customer.customerDtos.CustomerDto;
 import pl.polsl.restaurant.meal.Meal;
-import pl.polsl.restaurant.meal.MealDtos.MealDto;
 
 public class OrderDto {
 	private int id;

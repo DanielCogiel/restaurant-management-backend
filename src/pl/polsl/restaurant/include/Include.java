@@ -42,7 +42,7 @@ public class Include implements Serializable {
 	}
 	
 	@ManyToOne
-	public Ingredient getIndredient() {
+	public Ingredient getIngredient() {
 		return ingredient;
 	}
 	public void setIngredient(Ingredient ingredient) {

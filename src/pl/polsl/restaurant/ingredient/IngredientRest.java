@@ -1,4 +1,4 @@
-package pl.polsl.restaurant.meal;
+package pl.polsl.restaurant.ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +15,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientCreateDto;
-import pl.polsl.restaurant.meal.MealDtos.MealCreateDto;
-import pl.polsl.restaurant.meal.MealDtos.MealDto;
-import pl.polsl.restaurant.meal.MealDtos.MealUpdateDto;
+import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientDto;
+import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientUpdateDto;
 
-@Path(value="meals")
+@Path(value="ingredients")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 public class IngredientRest implements IngredientRestInterface {
-	
-	
 	@EJB
 	IngredientEjb ingredientBean;
 	
