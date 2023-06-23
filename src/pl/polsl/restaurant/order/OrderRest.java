@@ -36,9 +36,7 @@ public class OrderRest implements OrderRestInterface {
 	@POST
 	public OrderDto create(OrderCreateDto createOrder) {
 		Order order = new Order();
-		order.setMeals(createOrder.getMeals());
-		order.setCustomer(createOrder.getCustomer());
-		this.orderBean.create(order);
+		this.orderBean.create(order, createOrder.getUserId(), createOrder.getMeals());
 		
 		OrderDto orderData = new OrderDto(order.getId(),
 				order.getMeals(), order.getCustomer());
@@ -80,12 +78,8 @@ public class OrderRest implements OrderRestInterface {
         Order order = orderBean.find(id);
         if (order != null) {
 
-            order.setId(updatedOrder.getId());
-            order.setMeals(updatedOrder.getMeals());
-            order.setCustomer(updatedOrder.getCustomer());
-            
-
-            orderBean.update(order);
+//            order.setId(updatedOrder.getId());
+            orderBean.update(order, updatedOrder.getCustomer(), updatedOrder.getMeals());
             
             return Response.ok().entity("{\"message\":\"Zamówienie zosta³o zaktualizowane.\"}").build();
         } else {

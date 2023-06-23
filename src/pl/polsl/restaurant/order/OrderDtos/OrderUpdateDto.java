@@ -7,25 +7,19 @@ import pl.polsl.restaurant.customer.Customer;
 import pl.polsl.restaurant.meal.Meal;
 
 public class OrderUpdateDto {
-	private int id;
-	private List<Meal> meals = new ArrayList<Meal>();
-	private Customer customer;
+	private List<Integer> meals = new ArrayList<Integer>();
+	private int customer;
 	
-	public OrderUpdateDto(int id, List<Meal> meals, Customer customer) {
-		this.id = id;
+	public OrderUpdateDto(int id, List<Integer> meals, int customer) {
 		this.meals = meals;
 		this.customer = customer;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public List<Meal> getMeals() {
+	public List<Integer> getMeals() {
 		return meals;
 	}
 
-	public Customer getCustomer() {
+	public int getCustomer() {
 		return customer;
 	}
 	

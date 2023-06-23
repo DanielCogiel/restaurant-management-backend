@@ -9,27 +9,27 @@ import pl.polsl.restaurant.meal.Meal;
 import pl.polsl.restaurant.meal.MealDtos.MealDto;
 
 public class OrderCreateDto {
-	private List<Meal> meals = new ArrayList<Meal>();
-	private Customer customer;
+	private List<Integer> meals = new ArrayList<Integer>();
+	private int userId;
 	
 	public OrderCreateDto() {}
-	public OrderCreateDto(List<Meal> meals, Customer customer) {
+	public OrderCreateDto(List<Integer> meals, int userId) {
 		this.setMeals(meals);
-		this.setCustomer(customer);
+		this.setUserId(userId);
 	}
 	
-	public void setMeals(List<Meal> meals) {
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public void setMeals(List<Integer> meals) {
 		this.meals = meals;
 	}
 	
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-	public List<Meal> getMeals() {
+	public List<Integer> getMeals() {
 		return meals;
-	}
-	public Customer getCustomer() {
-		return customer;
 	}
 
 }
