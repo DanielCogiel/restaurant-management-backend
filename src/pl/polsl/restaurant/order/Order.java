@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,7 +23,7 @@ public class Order implements Serializable {
 	List<Meal> meals = new ArrayList<Meal>();
 	Customer customer;
 
-	@OneToMany
+	@OneToMany(mappedBy="order")
 	public List<Meal> getMeals() {
 		return meals;
 	}
@@ -32,6 +33,7 @@ public class Order implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "CUSTOMER_ID", referencedColumnName="CUSTOMER_ID")
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -42,6 +44,7 @@ public class Order implements Serializable {
 
 	@Id
 	@GeneratedValue
+	@Column(name="ORDER_ID")
 	public int getId() {
 		return id;
 	}

@@ -5,12 +5,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,7 +30,16 @@ public class Meal implements Serializable {
 	Spiciness spiciness;
 	DietType dietType;
 	Set<Include> includes = new HashSet<Include>();
+	Order order;
 	
+	@ManyToOne
+	@JoinColumn(name="ORDER_ID", referencedColumnName="ORDER_ID")
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 	/*@ManyToMany
 	@JoinTable(name="MEAL_INGR",
     joinColumns=
@@ -35,7 +48,7 @@ public class Meal implements Serializable {
         @JoinColumn(name="INGR_ID", referencedColumnName="ID")
     )
 	*/
-	@OneToMany(mappedBy="meal")
+	@OneToMany(mappedBy="meal", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	public Set<Include> getIncludes() {
 		return includes;
 	}
@@ -45,6 +58,7 @@ public class Meal implements Serializable {
 	
 	@Id
 	@GeneratedValue
+	@Column(name="MEAL_ID")
 	public int getId() {
 		return id;
 	}

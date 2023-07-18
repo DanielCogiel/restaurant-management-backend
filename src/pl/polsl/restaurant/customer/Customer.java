@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,6 +32,7 @@ public class Customer implements Serializable {
 	
 	@Id
 	@GeneratedValue
+	@Column(name="CUSTOMER_ID")
 	public int getId() {
 		return id;
 	}
