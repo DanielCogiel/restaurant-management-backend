@@ -40,15 +40,8 @@ public class Meal implements Serializable {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	/*@ManyToMany
-	@JoinTable(name="MEAL_INGR",
-    joinColumns=
-        @JoinColumn(name="MEAL_ID", referencedColumnName="ID"),
-    inverseJoinColumns=
-        @JoinColumn(name="INGR_ID", referencedColumnName="ID")
-    )
-	*/
-	@OneToMany(mappedBy="meal", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	
+	@OneToMany(mappedBy="meal")
 	public Set<Include> getIncludes() {
 		return includes;
 	}
