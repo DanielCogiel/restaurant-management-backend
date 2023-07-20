@@ -1,17 +1,33 @@
 package pl.polsl.restaurant.meal;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import pl.polsl.restaurant.include.Include;
+import pl.polsl.restaurant.order.Order;
 
 @Stateless
 public class MealEjb {
 	
 	@PersistenceContext(name="restaurant") EntityManager manager;
 	
-	public void create(Meal meal) {
+	public void create(Meal meal, int orderId, List<Integer> includeIds) {
+		Order order = this.manager.find(Order.class, orderId);
+		meal.setOrder(order);
+		
+		Set<Include> includeList = new HashSet<Include>();
+		for (int includeId : includeIds) {
+			Include include = this.manager.find(Include.class, includeId);
+			includeList.add(include);
+		}
+		meal.setIncludes(includeList);
+		
 		manager.persist(meal);
 	}
 	public List<Meal> get() {

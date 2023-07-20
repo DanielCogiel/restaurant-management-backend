@@ -45,13 +45,7 @@ public class OrderRest implements OrderRestInterface {
 	
 	@Override
 	@GET
-	public ArrayList<OrderDto> get() {
-//		CustomerDto customer1 = new CustomerDto();
-//		CustomerDto customer2 = new CustomerDto();
-//		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
-//		customers.add(customer1);
-//		customers.add(customer2);
-		
+	public ArrayList<OrderDto> get() {		
 		List<Order> orderEntities = this.orderBean.get();
 		ArrayList<OrderDto> orders = new ArrayList<OrderDto>();
 		

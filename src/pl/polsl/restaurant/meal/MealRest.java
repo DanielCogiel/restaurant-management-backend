@@ -34,9 +34,8 @@ public class MealRest implements MealRestInterface {
 		meal.setName(createMeal.getName());
 		meal.setSpiciness(createMeal.getSpiciness());
 		meal.setDietType(createMeal.getDietType());
-		meal.setIncludes(createMeal.getIncludes());
 		
-		this.mealBean.create(meal);
+		this.mealBean.create(meal, createMeal.getOrderId(), createMeal.getIncludeIds());
 		
 		MealDto mealData = new MealDto(meal.getId(),
 				meal.getName(), meal.getSpiciness(), meal.getDietType(), meal.getIncludes());

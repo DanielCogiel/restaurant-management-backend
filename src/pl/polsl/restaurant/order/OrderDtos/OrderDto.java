@@ -5,26 +5,29 @@ import java.util.List;
 
 import pl.polsl.restaurant.customer.Customer;
 import pl.polsl.restaurant.meal.Meal;
+import pl.polsl.restaurant.meal.MealDtos.MealDtoNoIncludes;
 
 public class OrderDto {
 	private int id;
-	private List<Meal> meals = new ArrayList<Meal>();
+	private List<MealDtoNoIncludes> meals = new ArrayList<MealDtoNoIncludes>();
 	private int customerId;
 	
 	public OrderDto(){};
 	public OrderDto(int id, List<Meal> meals, Customer customer){
 		this.id = id;
-		this.meals = meals;
+		for (Meal meal : meals) {
+			this.meals.add(new MealDtoNoIncludes(meal.getId(), meal.getName()/*, meal.getSpiciness(), meal.getDietType()*/));
+		}
 		this.customerId = customer.getId();
 	};
 	
 	public int getId() {
 		return id;
 	}
-	public List<Meal> getMeals() {
+	public List<MealDtoNoIncludes> getMeals() {
 		return meals;
 	}
 	public int getCustomerId() {
 		return customerId;
-	}	
+	}
 }

@@ -14,14 +14,16 @@ public class MealCreateDto {
 	private String name;
 	private Spiciness spiciness;
 	private DietType dietType;
-	private Set<Include> includes = new HashSet<Include>();
+	private int orderId;
+	private List<Integer> includeIds = new ArrayList<Integer>();
 	
 	public MealCreateDto() {}
-	public MealCreateDto(String name, Spiciness spiciness, DietType dietType, Set<Include> includes) {
+	public MealCreateDto(String name, Spiciness spiciness, DietType dietType, int orderId, List<Integer> includeIds) {
 		this.setName(name);
 		this.setSpiciness(spiciness);
 		this.setDietType(dietType);
-		this.setIncludes(includes);
+		this.setOrderId(orderId);
+		this.setIncludeIds(includeIds);
 	}
 	public String getName() {
 		return name;
@@ -41,13 +43,16 @@ public class MealCreateDto {
 	public void setDietType(DietType dietType) {
 		this.dietType = dietType;
 	}
-	public Set<Include> getIncludes() {
-		return includes;
+	public int getOrderId() {
+		return orderId;
 	}
-	public void setIncludes(Set<Include> includes) {
-		this.includes = includes;
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
-	
-
-
+	public List<Integer> getIncludeIds() {
+		return includeIds;
+	}
+	public void setIncludeIds(List<Integer> includeIds) {
+		this.includeIds = includeIds;
+	}
 }
