@@ -1,6 +1,7 @@
 package pl.polsl.restaurant.meal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class Meal implements Serializable {
 	String name;
 	Spiciness spiciness;
 	DietType dietType;
-	Set<Include> includes = new HashSet<Include>();
+	List<Include> includes = new ArrayList<Include>();
 	Order order;
 	
 	@ManyToOne
@@ -42,10 +43,10 @@ public class Meal implements Serializable {
 	}
 	
 	@OneToMany(mappedBy="meal")
-	public Set<Include> getIncludes() {
+	public List<Include> getIncludes() {
 		return includes;
 	}
-	public void setIncludes(Set<Include> includes) {
+	public void setIncludes(List<Include> includes) {
 		this.includes = includes;
 	}
 	

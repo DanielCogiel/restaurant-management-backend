@@ -17,15 +17,14 @@ public class OrderEjb {
 	
 	public void create(Order order, int customerId, List<Integer> mealsIds) {
 		Customer customer = this.manager.find(Customer.class, customerId);
-		order.setCustomer(customer);
+		order.setCustomer(customer);	
+		manager.persist(order);
 		
-		List <Meal> mealList = new ArrayList<Meal>();
 		for (int mealId : mealsIds) {
 			Meal meal = this.manager.find(Meal.class, mealId);
-			mealList.add(meal);
+			meal.setOrder(order);
+			manager.merge(meal);
 		}
-		order.setMeals(mealList);	
-		manager.persist(order);
 	}
 	
 	

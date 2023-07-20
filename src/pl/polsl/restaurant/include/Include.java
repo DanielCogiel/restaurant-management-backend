@@ -3,8 +3,11 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -34,6 +37,7 @@ public class Include implements Serializable {
 		this.unit = unit;
 	}
 	@ManyToOne
+	@JoinColumn(name="MEAL_ID", referencedColumnName="MEAL_ID")
 	public Meal getMeal() {
 		return meal;
 	}
@@ -42,6 +46,7 @@ public class Include implements Serializable {
 	}
 	
 	@ManyToOne
+	@JoinColumn(name="INGREDIENT_ID", referencedColumnName="INGREDIENT_ID")
 	public Ingredient getIngredient() {
 		return ingredient;
 	}
@@ -50,6 +55,8 @@ public class Include implements Serializable {
 	}
 	
 	@Id
+	@GeneratedValue
+	@Column(name="INCLUDE_ID")
 	public int getId() {
 		return id;
 	}

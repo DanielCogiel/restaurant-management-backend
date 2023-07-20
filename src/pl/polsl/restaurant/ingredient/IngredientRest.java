@@ -31,12 +31,11 @@ public class IngredientRest implements IngredientRestInterface {
 		Ingredient ingredient = new Ingredient();
 		ingredient.setName(createIngredient.getName());
 		ingredient.setGluten(createIngredient.isGluten());
-		ingredient.setIncludes(createIngredient.getIncludes());
 		
 		this.ingredientBean.create(ingredient);
 		
 		IngredientDto ingredientData = new IngredientDto(ingredient.getId(),
-				ingredient.getName(), ingredient.isGluten(), ingredient.getIncludes());
+				ingredient.getName(), ingredient.isGluten());
 		return ingredientData;
 	}
 	
@@ -48,7 +47,7 @@ public class IngredientRest implements IngredientRestInterface {
 		ArrayList<IngredientDto> ingredients = new ArrayList<IngredientDto>();
 		
 		for (Ingredient ingredient : ingredientEntities) {
-			ingredients.add(new IngredientDto(ingredient.getId(), ingredient.getName(), ingredient.isGluten(), ingredient.getIncludes()));
+			ingredients.add(new IngredientDto(ingredient.getId(), ingredient.getName(), ingredient.isGluten()));
 		}
 		
 		return ingredients;
@@ -59,7 +58,7 @@ public class IngredientRest implements IngredientRestInterface {
 	@Path(value = "/{id}")
 	public IngredientDto find(@PathParam("id") int id) {
 		Ingredient ingredient = this.ingredientBean.find(id);
-		return new IngredientDto(ingredient.getId(), ingredient.getName(), ingredient.isGluten(),ingredient.getIncludes());
+		return new IngredientDto(ingredient.getId(), ingredient.getName(), ingredient.isGluten());
 	}
 	
 	@Override

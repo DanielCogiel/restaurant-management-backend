@@ -8,22 +8,21 @@ import java.util.Set;
 import pl.polsl.restaurant.include.Include;
 import pl.polsl.restaurant.meal.DietType;
 import pl.polsl.restaurant.meal.Spiciness;
+import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientAmount;
 
 
 public class MealCreateDto {
 	private String name;
 	private Spiciness spiciness;
 	private DietType dietType;
-	private int orderId;
-	private List<Integer> includeIds = new ArrayList<Integer>();
+	private List<IngredientAmount> ingredients = new ArrayList<IngredientAmount>();
 	
 	public MealCreateDto() {}
-	public MealCreateDto(String name, Spiciness spiciness, DietType dietType, int orderId, List<Integer> includeIds) {
-		this.setName(name);
-		this.setSpiciness(spiciness);
-		this.setDietType(dietType);
-		this.setOrderId(orderId);
-		this.setIncludeIds(includeIds);
+	public MealCreateDto(String name, Spiciness spiciness, DietType dietType, ArrayList<IngredientAmount> ingredients) {
+		this.name = name;
+		this.spiciness = spiciness;
+		this.dietType = dietType;
+		this.ingredients = ingredients;
 	}
 	public String getName() {
 		return name;
@@ -43,16 +42,11 @@ public class MealCreateDto {
 	public void setDietType(DietType dietType) {
 		this.dietType = dietType;
 	}
-	public int getOrderId() {
-		return orderId;
+	public List<IngredientAmount> getIngredients() {
+		return ingredients;
 	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setIngredients(List<IngredientAmount> ingredients) {
+		this.ingredients = ingredients;
 	}
-	public List<Integer> getIncludeIds() {
-		return includeIds;
-	}
-	public void setIncludeIds(List<Integer> includeIds) {
-		this.includeIds = includeIds;
-	}
+
 }

@@ -1,11 +1,15 @@
 package pl.polsl.restaurant.meal.MealDtos;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import pl.polsl.restaurant.customer.Customer;
 import pl.polsl.restaurant.include.Include;
+import pl.polsl.restaurant.ingredient.Ingredient;
+import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientAmount;
+import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientAmountName;
 import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientDto;
 import pl.polsl.restaurant.meal.DietType;
 import pl.polsl.restaurant.meal.Meal;
@@ -16,15 +20,15 @@ public class MealDto {
 	private String name;
 	private Spiciness spiciness;
 	private DietType dietType;
-	private Set<Include> includes = new HashSet<Include>();
+	private List<IngredientAmountName> ingredients = new ArrayList<IngredientAmountName>();
 	
 	public MealDto(){};
-	public MealDto(int id, String name, Spiciness spiciness, DietType dietType, Set<Include> includes){
+	public MealDto(int id, String name, Spiciness spiciness, DietType dietType, List<IngredientAmountName> ingredients){
 		this.id = id;
 		this.name = name;
 		this.spiciness = spiciness;
 		this.dietType = dietType;
-		this.includes = includes;
+		this.ingredients = ingredients;
 	};
 	
 	public int getId() {
@@ -39,7 +43,23 @@ public class MealDto {
 	public DietType getDietType() {
 		return dietType;
 	}
-	public Set<Include> getIncludes() {
-		return includes;
+	public List<IngredientAmountName> getIngredients() {
+		return ingredients;
 	}
+	public void setIngredients(List<IngredientAmountName> ingredients) {
+		this.ingredients = ingredients;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setSpiciness(Spiciness spiciness) {
+		this.spiciness = spiciness;
+	}
+	public void setDietType(DietType dietType) {
+		this.dietType = dietType;
+	}
+
 }

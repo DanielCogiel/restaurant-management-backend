@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,7 +22,6 @@ public class Ingredient implements Serializable {
 	String name;
 	boolean isGluten;
 	Set<Include> includes = new HashSet<Include>();
-	
 
 	@OneToMany(mappedBy="ingredient")
 	public Set<Include> getIncludes() {
@@ -32,6 +32,7 @@ public class Ingredient implements Serializable {
 	}
 	@Id
 	@GeneratedValue
+	@Column(name="INGREDIENT_ID")
 	public int getId() {
 		return id;
 	}

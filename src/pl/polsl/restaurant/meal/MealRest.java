@@ -16,47 +16,40 @@ import javax.ws.rs.core.Response;
 
 import pl.polsl.restaurant.meal.MealDtos.MealCreateDto;
 import pl.polsl.restaurant.meal.MealDtos.MealDto;
+import pl.polsl.restaurant.meal.MealDtos.MealDtoNoIncludes;
 import pl.polsl.restaurant.meal.MealDtos.MealUpdateDto;
 
 @Path(value="meals")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 public class MealRest implements MealRestInterface {
-	
-	
 	@EJB
 	MealEjb mealBean;
 	
 	@Override
 	@POST
-	public MealDto create(MealCreateDto createMeal) {
+	public MealDtoNoIncludes create(MealCreateDto createMeal) {
 		Meal meal = new Meal();
 		meal.setName(createMeal.getName());
 		meal.setSpiciness(createMeal.getSpiciness());
 		meal.setDietType(createMeal.getDietType());
 		
-		this.mealBean.create(meal, createMeal.getOrderId(), createMeal.getIncludeIds());
+		this.mealBean.create(meal, createMeal.getIngredients());
 		
-		MealDto mealData = new MealDto(meal.getId(),
-				meal.getName(), meal.getSpiciness(), meal.getDietType(), meal.getIncludes());
+		MealDtoNoIncludes mealData = new MealDtoNoIncludes(meal.getId(), meal.getName(), meal.getSpiciness(),
+				meal.getDietType());
 		return mealData;
 	}
 	
 	@Override
 	@GET
-	public ArrayList<MealDto> get() {
-//		CustomerDto customer1 = new CustomerDto();
-//		CustomerDto customer2 = new CustomerDto();
-//		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
-//		customers.add(customer1);
-//		customers.add(customer2);
+	public List<MealDto> get() {
+		List<MealDto> meals = this.mealBean.get();
+//		ArrayList<MealDto> meals = new ArrayList<MealDto>();
 		
-		List<Meal> mealEntities = this.mealBean.get();
-		ArrayList<MealDto> meals = new ArrayList<MealDto>();
-		
-		for (Meal meal : mealEntities) {
-			meals.add(new MealDto(meal.getId(), meal.getName(), meal.getSpiciness(), meal.getDietType(), meal.getIncludes()));
-		}
+//		for (Meal meal : mealEntities) {
+//			meals.add(new MealDto(meal.getId(), meal.getName(), meal.getSpiciness(), meal.getDietType(), meal.getIncludes()));
+//		}
 		
 		return meals;
 	}
@@ -66,7 +59,7 @@ public class MealRest implements MealRestInterface {
 	@Path(value = "/{id}")
 	public MealDto find(@PathParam("id") int id) {
 		Meal meal = this.mealBean.find(id);
-		return new MealDto(meal.getId(), meal.getName(), meal.getSpiciness(), meal.getDietType(), meal.getIncludes());
+		return new MealDto();
 	}
 	
 	@Override
@@ -81,7 +74,7 @@ public class MealRest implements MealRestInterface {
         	meal.setName(updatedMeal.getName());
         	meal.setSpiciness(updatedMeal.getSpiciness());
         	meal.setDietType(updatedMeal.getDietType());
-        	meal.setIncludes(updatedMeal.getIncludes());
+//        	meal.setIncludes(updatedMeal.getIncludes());
             
 
             mealBean.update(meal);

@@ -16,7 +16,7 @@ public class OrderDto {
 	public OrderDto(int id, List<Meal> meals, Customer customer){
 		this.id = id;
 		for (Meal meal : meals) {
-			this.meals.add(new MealDtoNoIncludes(meal.getId(), meal.getName()/*, meal.getSpiciness(), meal.getDietType()*/));
+			this.meals.add(new MealDtoNoIncludes(meal.getId(), meal.getName(), meal.getSpiciness(), meal.getDietType()));
 		}
 		this.customerId = customer.getId();
 	};

@@ -10,6 +10,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import pl.polsl.restaurant.include.Include;
+import pl.polsl.restaurant.ingredient.Ingredient;
+import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientAmount;
+import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientAmountName;
+import pl.polsl.restaurant.meal.MealDtos.MealDto;
 import pl.polsl.restaurant.order.Order;
 
 @Stateless
@@ -17,25 +21,35 @@ public class MealEjb {
 	
 	@PersistenceContext(name="restaurant") EntityManager manager;
 	
-	public void create(Meal meal, int orderId, List<Integer> includeIds) {
-		Order order = this.manager.find(Order.class, orderId);
-		meal.setOrder(order);
-		
-		Set<Include> includeList = new HashSet<Include>();
-		for (int includeId : includeIds) {
-			Include include = this.manager.find(Include.class, includeId);
-			includeList.add(include);
-		}
-		meal.setIncludes(includeList);
-		
+	public void create(Meal meal, List<IngredientAmount> ingredients) {
 		manager.persist(meal);
+		
+		for (IngredientAmount ingredientData : ingredients) {
+			Ingredient ingredient = this.manager.find(Ingredient.class, ingredientData.getIngredientId());
+			Include include = new Include();
+			include.setAmount(ingredientData.getAmount());
+			include.setUnit(ingredientData.getUnit());
+			include.setIngredient(ingredient);
+			include.setMeal(meal);
+			this.manager.merge(include);
+		}
 	}
-	public List<Meal> get() {
+	public List<MealDto> get() {
 		List<Meal> meals = this
 				.manager
 				.createQuery("select distinct c from Meal c left join fetch c.includes", Meal.class)
 				.getResultList();
-		return meals;
+		List<MealDto> mealsData = new ArrayList<MealDto>();
+		for (Meal meal : meals) {
+			List<Include> includes = meal.getIncludes();
+			List<IngredientAmountName> ingredients = new ArrayList<IngredientAmountName>();
+			for (Include include : includes) {
+				ingredients.add(new IngredientAmountName(include.getIngredient().getName(), 
+						include.getAmount(), include.getUnit()));
+			}
+			mealsData.add(new MealDto(meal.getId(), meal.getName(), meal.getSpiciness(), meal.getDietType(), ingredients));
+		}
+		return mealsData;
 	}
 	public Meal find(int id) {
 		Meal meal = (Meal) this
