@@ -67,7 +67,13 @@ public class MealRest implements MealRestInterface {
 	@Override
 	@PUT
 	@Path(value = "/{id}/edit")
-	public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
+	//poni¿sza funkcja robi POST zamiast PUT
+	/*public Response update(@PathParam("id") int id, MealCreateDto meal)
+	{
+		mealBean.update(meal.fromDTO());
+		return Response.ok().build();
+	}
+	*/public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
         
 		Meal meal = mealBean.find(id);
         if (meal != null) {
@@ -98,6 +104,12 @@ public class MealRest implements MealRestInterface {
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Danie o podanym identyfikatorze nie zosta³o znalezione.\"}").build();
         }
+	}
+
+	@Override
+	public Response update(int id, MealUpdateDto updatedMeal) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

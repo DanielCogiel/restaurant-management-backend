@@ -7,6 +7,7 @@ import java.util.Set;
 
 import pl.polsl.restaurant.include.Include;
 import pl.polsl.restaurant.meal.DietType;
+import pl.polsl.restaurant.meal.Meal;
 import pl.polsl.restaurant.meal.Spiciness;
 import pl.polsl.restaurant.ingredient.IngredientDtos.IngredientAmount;
 
@@ -16,6 +17,7 @@ public class MealCreateDto {
 	private Spiciness spiciness;
 	private DietType dietType;
 	private List<IngredientAmount> ingredients = new ArrayList<IngredientAmount>();
+	private List<Include> includes = new ArrayList<Include>();
 	
 	public MealCreateDto() {}
 	public MealCreateDto(String name, Spiciness spiciness, DietType dietType, ArrayList<IngredientAmount> ingredients) {
@@ -42,11 +44,26 @@ public class MealCreateDto {
 	public void setDietType(DietType dietType) {
 		this.dietType = dietType;
 	}
+	public void setIncludes(List<Include> includes) {
+		this.includes = includes;
+		
+	}
+	public List<Include> getIncludes() {
+		return includes;
+	}
 	public List<IngredientAmount> getIngredients() {
 		return ingredients;
 	}
 	public void setIngredients(List<IngredientAmount> ingredients) {
 		this.ingredients = ingredients;
 	}
+	public Meal fromDTO() {
+		Meal child = new Meal();
+		child.setName(name);
+        child.setSpiciness(spiciness);
+        child.setDietType(dietType);
+        child.setIncludes(includes);
+        return child;
+    }
 
 }
