@@ -52,12 +52,13 @@ public class MealEjb {
 		return mealsData;
 	}
 	public Meal find(int id) {
-		Meal meal = (Meal) this
+		/*Meal meal = (Meal) this
 				.manager
 				.createQuery("select distinct c from Meal c left join fetch c.includes o where c.id = :id")
 				.setParameter("id", id)
 				.getSingleResult();
-		return meal;
+		return meal;*/
+		return manager.find(Meal.class, id);
 	}
 	public void update(Meal meal) {
 		 manager.merge(meal);

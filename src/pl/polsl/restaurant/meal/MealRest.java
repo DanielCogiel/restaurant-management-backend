@@ -58,8 +58,10 @@ public class MealRest implements MealRestInterface {
 	@GET
 	@Path(value = "/{id}")
 	public MealDto find(@PathParam("id") int id) {
-		Meal meal = this.mealBean.find(id);
-		return new MealDto();
+		MealDto dto = mealBean.find(id).toDTO();
+		//Meal meal = this.mealBean.find(id);
+		//return new MealDto();
+		return dto;
 	}
 	
 	@Override

@@ -21,6 +21,7 @@ import javax.persistence.Table;
 
 import pl.polsl.restaurant.include.Include;
 import pl.polsl.restaurant.ingredient.Ingredient;
+import pl.polsl.restaurant.meal.MealDtos.MealDto;
 import pl.polsl.restaurant.order.Order;
 
 @Entity
@@ -78,4 +79,13 @@ public class Meal implements Serializable {
 		this.dietType = dietType;
 	}
 	
+	public MealDto toDTO() {
+		MealDto dto = new MealDto();
+        dto.setName(name);
+        dto.setSpiciness(spiciness);
+        dto.setDietType(dietType);
+        dto.setIncludes(includes);
+
+        return dto;
+    }
 }

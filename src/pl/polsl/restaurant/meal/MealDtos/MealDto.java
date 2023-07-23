@@ -21,6 +21,7 @@ public class MealDto {
 	private Spiciness spiciness;
 	private DietType dietType;
 	private List<IngredientAmountName> ingredients = new ArrayList<IngredientAmountName>();
+	private List<Include> includes = new ArrayList<Include>();
 	
 	public MealDto(){};
 	public MealDto(int id, String name, Spiciness spiciness, DietType dietType, List<IngredientAmountName> ingredients){
@@ -46,6 +47,10 @@ public class MealDto {
 	public List<IngredientAmountName> getIngredients() {
 		return ingredients;
 	}
+	public List<Include> getIncludes() {
+		return includes;
+		
+	}
 	public void setIngredients(List<IngredientAmountName> ingredients) {
 		this.ingredients = ingredients;
 	}
@@ -60,6 +65,10 @@ public class MealDto {
 	}
 	public void setDietType(DietType dietType) {
 		this.dietType = dietType;
+	}
+	public void setIncludes(List<Include> includes) {
+		this.includes = includes;
+		
 	}
 
 }
