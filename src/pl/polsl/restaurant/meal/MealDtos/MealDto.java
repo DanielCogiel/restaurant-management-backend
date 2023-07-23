@@ -70,5 +70,13 @@ public class MealDto {
 		this.includes = includes;
 		
 	}
+	public Meal fromDTO() {
+		Meal child = new Meal();
+		child.setName(name);
+        child.setSpiciness(spiciness);
+        child.setDietType(dietType);
+        child.setIncludes(includes);
+        return child;
+    }
 
 }

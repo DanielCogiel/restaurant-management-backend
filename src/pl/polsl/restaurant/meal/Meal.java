@@ -81,6 +81,7 @@ public class Meal implements Serializable {
 	
 	public MealDto toDTO() {
 		MealDto dto = new MealDto();
+		dto.setId(id);
         dto.setName(name);
         dto.setSpiciness(spiciness);
         dto.setDietType(dietType);

@@ -73,24 +73,16 @@ public class MealRest implements MealRestInterface {
 		mealBean.update(meal.fromDTO());
 		return Response.ok().build();
 	}
-	*/public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
+	*/
+	//public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
+	public Response update(@PathParam("id") int id, MealDto updatedMeal) {
         
-		Meal meal = mealBean.find(id);
-        if (meal != null) {
-
-        	meal.setId(updatedMeal.getId());
-        	meal.setName(updatedMeal.getName());
-        	meal.setSpiciness(updatedMeal.getSpiciness());
-        	meal.setDietType(updatedMeal.getDietType());
-//        	meal.setIncludes(updatedMeal.getIncludes());
-            
-
-            mealBean.update(meal);
+		//MealDto meal = mealBean.find(id).toDTO();
+		mealBean.update(updatedMeal.fromDTO());
+       
             
             return Response.ok().entity("{\"message\":\"Danie zosta³o zaktualizowane.\"}").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Danie o podanym identyfikatorze nie zosta³o znalezione.\"}").build();
-        }
+
     }
 
 	@DELETE

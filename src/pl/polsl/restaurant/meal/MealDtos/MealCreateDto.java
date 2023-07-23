@@ -57,13 +57,6 @@ public class MealCreateDto {
 	public void setIngredients(List<IngredientAmount> ingredients) {
 		this.ingredients = ingredients;
 	}
-	public Meal fromDTO() {
-		Meal child = new Meal();
-		child.setName(name);
-        child.setSpiciness(spiciness);
-        child.setDietType(dietType);
-        child.setIncludes(includes);
-        return child;
-    }
+	
 
 }

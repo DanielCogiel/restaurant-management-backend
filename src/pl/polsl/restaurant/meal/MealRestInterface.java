@@ -16,7 +16,8 @@ public interface MealRestInterface {
 	public abstract MealDtoNoIncludes create(MealCreateDto createMeal);
 	public abstract MealDto find(int id); 
 	public abstract List<MealDto> get();
-	public abstract Response update(int id, MealUpdateDto updatedMeal);
+	//public abstract Response update(int id, MealUpdateDto updatedMeal);
+	public abstract Response update(int id, MealDto updatedMeal);
 	public abstract Response delete(int id);
 	//public abstract Response update(int id, MealCreateDto meal);
 	
