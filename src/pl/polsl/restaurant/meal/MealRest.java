@@ -98,11 +98,6 @@ public class MealRest implements MealRestInterface {
         }
 	}
 
-	@Override
-	public Response update(int id, MealUpdateDto updatedMeal) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 
  }
