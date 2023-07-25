@@ -76,7 +76,7 @@ public class CustomerRest implements CustomerRestInterface {
 	
 	@Override
 	@DELETE
-	@Path(value="/{id}")
+	@Path(value="/{id}/delete")
 	public NotifierDto delete(@PathParam("id") int id) {
 		try {
 			this.customerBean.delete(id);
