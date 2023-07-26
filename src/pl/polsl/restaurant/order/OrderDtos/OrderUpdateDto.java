@@ -10,6 +10,7 @@ public class OrderUpdateDto {
 	private List<Integer> meals = new ArrayList<Integer>();
 	private int customer;
 	
+	public OrderUpdateDto() {}
 	public OrderUpdateDto(int id, List<Integer> meals, int customer) {
 		this.meals = meals;
 		this.customer = customer;

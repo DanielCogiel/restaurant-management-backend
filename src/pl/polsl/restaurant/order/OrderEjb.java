@@ -55,8 +55,9 @@ public class OrderEjb {
 		order.setMeals(mealList);
 		manager.merge(order);
 	}
-	public void delete(Order order) {
-		manager.remove(manager.contains(order) ? order : manager.merge(order));
+	public void delete(int id) {
+		Order order = this.manager.find(Order.class, id);
+		manager.remove(order);
 	}
 	/*
 	 * public void create(Customer customer) {

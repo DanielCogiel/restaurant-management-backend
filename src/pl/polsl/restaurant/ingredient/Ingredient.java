@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Ingredient implements Serializable {
 	boolean isGluten;
 	Set<Include> includes = new HashSet<Include>();
 
-	@OneToMany(mappedBy="ingredient")
+	@OneToMany(mappedBy="ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<Include> getIncludes() {
 		return includes;
 	}

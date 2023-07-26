@@ -9,13 +9,14 @@ import pl.polsl.restaurant.include.Include;
 public class IngredientUpdateDto {
 	private int id;
 	private String name;
-	private boolean isGluten;
+	private boolean gluten;
 	private Set<Include> includes = new HashSet<Include>();
 	
-	public IngredientUpdateDto(int id, String name, boolean isGluten, Set<Include> includes) {
+	public IngredientUpdateDto() {}
+	public IngredientUpdateDto(int id, String name, boolean gluten, Set<Include> includes) {
 		this.id = id;
 		this.name = name;
-		this.isGluten = isGluten;
+		this.gluten = gluten;
 		this.includes = includes;
 		
 		}
@@ -26,8 +27,8 @@ public class IngredientUpdateDto {
 	public String getName() {
 		return name;
 	}
-	public boolean isGluten() {
-		return isGluten;
+	public boolean getGluten() {
+		return gluten;
 	}
 	public Set<Include> getIncludes() {
 		return includes;

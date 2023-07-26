@@ -66,19 +66,17 @@ public class IngredientRest implements IngredientRestInterface {
 	@Path(value = "/{id}/edit")
 	public Response update(@PathParam("id") int id, IngredientUpdateDto updatedIngredient) {
         
-		Ingredient ingredient = ingredientBean.find(id);
-        if (ingredient != null) {
-
-        	ingredient.setId(updatedIngredient.getId());
-        	ingredient.setName(updatedIngredient.getName());
-        	ingredient.setGluten(updatedIngredient.isGluten());
-        	ingredient.setIncludes(updatedIngredient.getIncludes());
-            
-
+		try {
+			Ingredient ingredient = ingredientBean.find(id);
+        
+			if (updatedIngredient.getName() != null) {
+				ingredient.setName(updatedIngredient.getName());
+			}
+			ingredient.setGluten(updatedIngredient.getGluten());            
         	ingredientBean.update(ingredient);
             
             return Response.ok().entity("{\"message\":\"Sk³adnik zosta³ zaktualizowany.\"}").build();
-        } else {
+        } catch(Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Sk³adnik o podanym identyfikatorze nie zosta³ znaleziony.\"}").build();
         }
     }
@@ -86,12 +84,11 @@ public class IngredientRest implements IngredientRestInterface {
 	@DELETE
 	@Path(value = "/{id}/delete")
 	public Response delete(@PathParam("id") int id){
-		Ingredient ingredient = ingredientBean.find(id);
-        if (ingredient != null) {
-        	ingredientBean.delete(ingredient);
-            
+//		Ingredient ingredient = ingredientBean.find(id);
+        try {
+        	ingredientBean.delete(id);
             return Response.ok().entity("{\"message\":\"Sk³adnik zosta³ usuniêty.\"}").build();
-        } else {
+        } catch(Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Sk³adnik o podanym identyfikatorze nie zosta³ znaleziony.\"}").build();
         }
 	}

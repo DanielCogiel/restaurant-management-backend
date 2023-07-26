@@ -43,7 +43,7 @@ public class Meal implements Serializable {
 		this.order = order;
 	}
 	
-	@OneToMany(mappedBy="meal")
+	@OneToMany(mappedBy="meal", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Include> getIncludes() {
 		return includes;
 	}

@@ -32,7 +32,8 @@ public class IngredientEjb {
 	public void update(Ingredient ingredient) {
 		 manager.merge(ingredient);
 	}
-	public void delete(Ingredient ingredient) {
-		manager.remove(manager.contains(ingredient) ? ingredient : manager.merge(ingredient));
+	public void delete(int id) {
+		Ingredient ingredient = this.manager.find(Ingredient.class, id);
+		manager.remove(ingredient);
 	}
 }

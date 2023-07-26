@@ -51,19 +51,27 @@ public class MealEjb {
 		}
 		return mealsData;
 	}
-	public Meal find(int id) {
-		/*Meal meal = (Meal) this
-				.manager
-				.createQuery("select distinct c from Meal c left join fetch c.includes o where c.id = :id")
-				.setParameter("id", id)
-				.getSingleResult();
-		return meal;*/
-		return manager.find(Meal.class, id);
+	public MealDto find(int id) {
+		Meal meal = this.manager.find(Meal.class, id);
+		List<Include> includes = meal.getIncludes();
+		List<IngredientAmountName> ingredients = new ArrayList<IngredientAmountName>(); 
+		
+		for (Include include : includes) {
+			ingredients.add(new IngredientAmountName(include.getIngredient().getName(), 
+					include.getAmount(), include.getUnit()));
+		}
+		
+		return new MealDto(meal.getId(), meal.getName(), meal.getSpiciness(), meal.getDietType(), ingredients);
+	}
+	public Meal findEntity(int id) {
+		Meal meal = this.manager.find(Meal.class, id);
+		return meal;
 	}
 	public void update(Meal meal) {
 		 manager.merge(meal);
 	}
-	public void delete(Meal meal) {
-		manager.remove(manager.contains(meal) ? meal : manager.merge(meal));
+	public void delete(int id) {
+		Meal meal = this.manager.find(Meal.class, id);
+		manager.remove(meal);
 	}
 }

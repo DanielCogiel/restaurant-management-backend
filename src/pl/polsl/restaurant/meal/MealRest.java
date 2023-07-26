@@ -58,10 +58,10 @@ public class MealRest implements MealRestInterface {
 	@GET
 	@Path(value = "/{id}")
 	public MealDto find(@PathParam("id") int id) {
-		MealDto dto = mealBean.find(id).toDTO();
+		MealDto meal = mealBean.find(id);
 		//Meal meal = this.mealBean.find(id);
 		//return new MealDto();
-		return dto;
+		return meal;
 	}
 	
 	@Override
@@ -78,22 +78,33 @@ public class MealRest implements MealRestInterface {
 	public Response update(@PathParam("id") int id, MealDto updatedMeal) {
         
 		//MealDto meal = mealBean.find(id).toDTO();
-		mealBean.update(updatedMeal.fromDTO());
-       
-            
-            return Response.ok().entity("{\"message\":\"Danie zosta³o zaktualizowane.\"}").build();
+		try {
+			Meal meal = this.mealBean.findEntity(id);
+			if (updatedMeal.getName() != null) {
+				meal.setName(updatedMeal.getName());
+			}
+			if (updatedMeal.getSpiciness() != null) {
+				meal.setSpiciness(updatedMeal.getSpiciness());
+			}
+			if (updatedMeal.getDietType() != null) {
+				meal.setDietType(updatedMeal.getDietType());
+			}
+			mealBean.update(meal);
+			return Response.ok().entity("{\"message\":\"Danie zosta³o zaktualizowane.\"}").build();
+		} catch (Exception e) {
+			return Response.status(500).entity("{\"message\":\"Wyst¹pi³ problem z aktualizacj¹ posi³ku.\"}").build();
+		}
+          
 
     }
 
 	@DELETE
 	@Path(value = "/{id}/delete")
 	public Response delete(@PathParam("id") int id){
-		Meal meal = mealBean.find(id);
-        if (meal != null) {
-        	mealBean.delete(meal);
-            
+        try {
+        	mealBean.delete(id);
             return Response.ok().entity("{\"message\":\"Danie zosta³o usuniête.\"}").build();
-        } else {
+        } catch(Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Danie o podanym identyfikatorze nie zosta³o znalezione.\"}").build();
         }
 	}

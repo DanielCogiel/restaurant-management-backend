@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Order implements Serializable {
 	List<Meal> meals = new ArrayList<Meal>();
 	Customer customer;
 
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Meal> getMeals() {
 		return meals;
 	}

@@ -84,12 +84,10 @@ public class OrderRest implements OrderRestInterface {
 	@DELETE
 	@Path(value = "/{id}/delete")
 	public Response delete(@PathParam("id") int id){
-		Order order = orderBean.find(id);
-        if (order != null) {
-            orderBean.delete(order);
-            
+        try {
+            orderBean.delete(id);
             return Response.ok().entity("{\"message\":\"Zamówienie zosta³o usuniête.\"}").build();
-        } else {
+        } catch(Exception e) {
             return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Zamówienie o podanym identyfikatorze nie zosta³o znalezione.\"}").build();
         }
 	}
