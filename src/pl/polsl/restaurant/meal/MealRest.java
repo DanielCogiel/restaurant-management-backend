@@ -75,9 +75,7 @@ public class MealRest implements MealRestInterface {
 	}
 	*/
 	//public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
-	public Response update(@PathParam("id") int id, MealDto updatedMeal) {
-        
-		//MealDto meal = mealBean.find(id).toDTO();
+	public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
 		try {
 			Meal meal = this.mealBean.findEntity(id);
 			if (updatedMeal.getName() != null) {
@@ -89,13 +87,11 @@ public class MealRest implements MealRestInterface {
 			if (updatedMeal.getDietType() != null) {
 				meal.setDietType(updatedMeal.getDietType());
 			}
-			mealBean.update(meal);
+			mealBean.update(meal, updatedMeal.getIngredients());
 			return Response.ok().entity("{\"message\":\"Danie zosta³o zaktualizowane.\"}").build();
 		} catch (Exception e) {
 			return Response.status(500).entity("{\"message\":\"Wyst¹pi³ problem z aktualizacj¹ posi³ku.\"}").build();
 		}
-          
-
     }
 
 	@DELETE

@@ -71,8 +71,6 @@ public class OrderRest implements OrderRestInterface {
         
         Order order = orderBean.find(id);
         if (order != null) {
-
-//            order.setId(updatedOrder.getId());
             orderBean.update(order, updatedOrder.getCustomer(), updatedOrder.getMeals());
             
             return Response.ok().entity("{\"message\":\"Zamówienie zosta³o zaktualizowane.\"}").build();

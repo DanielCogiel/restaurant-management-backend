@@ -31,7 +31,7 @@ public class MealEjb {
 			include.setUnit(ingredientData.getUnit());
 			include.setIngredient(ingredient);
 			include.setMeal(meal);
-			this.manager.merge(include);
+			this.manager.persist(include);
 		}
 	}
 	public List<MealDto> get() {
@@ -67,11 +67,34 @@ public class MealEjb {
 		Meal meal = this.manager.find(Meal.class, id);
 		return meal;
 	}
-	public void update(Meal meal) {
-		 manager.merge(meal);
+	public void update(Meal meal, List<IngredientAmount> ingredients) {
+//		this.clearIncludes(meal);
+		for (IngredientAmount ingredientData : ingredients) {
+			Ingredient ingredient = this.manager.find(Ingredient.class, ingredientData.getIngredientId());
+			Include include = new Include();
+			include.setAmount(ingredientData.getAmount());
+			include.setUnit(ingredientData.getUnit());
+			
+			if (ingredient != null) {
+				include.setIngredient(ingredient);
+			}
+			
+			include.setMeal(meal);
+			this.manager.persist(include);
+		}
+		manager.merge(meal);
 	}
 	public void delete(int id) {
 		Meal meal = this.manager.find(Meal.class, id);
 		manager.remove(meal);
+	}
+	private void clearIncludes(Meal meal) {	
+		List<Include> includes = meal.getIncludes();
+		for (Include include : includes) {
+			this.manager.remove(include);
+		}
+		includes.clear();
+		meal.setIncludes(includes);
+		this.manager.merge(meal);
 	}
 }

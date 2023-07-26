@@ -17,8 +17,10 @@ public class OrderEjb {
 	
 	public void create(Order order, int customerId, List<Integer> mealsIds) {
 		Customer customer = this.manager.find(Customer.class, customerId);
-		order.setCustomer(customer);	
-		manager.persist(order);
+		if (customer != null) {
+			order.setCustomer(customer);	
+			manager.persist(order);
+		}
 		
 		for (int mealId : mealsIds) {
 			Meal meal = this.manager.find(Meal.class, mealId);
@@ -45,49 +47,28 @@ public class OrderEjb {
 	}
 	public void update(Order order, int customerId, List<Integer> mealsIds) {
 		Customer customer = this.manager.find(Customer.class, customerId);
-		order.setCustomer(customer);
+		if (customer != null) {
+			order.setCustomer(customer);
+			manager.merge(order);
+		}
 		
-		List <Meal> mealList = new ArrayList<Meal>();
+		this.clearMeals(order);
 		for (int mealId : mealsIds) {
 			Meal meal = this.manager.find(Meal.class, mealId);
-			mealList.add(meal);
+			meal.setOrder(order);
+			manager.merge(meal);
 		}
-		order.setMeals(mealList);
-		manager.merge(order);
 	}
 	public void delete(int id) {
 		Order order = this.manager.find(Order.class, id);
 		manager.remove(order);
 	}
-	/*
-	 * public void create(Customer customer) {
-		manager.persist(customer);
+	
+	private void clearMeals(Order order) {
+		List<Meal> meals = order.getMeals();
+		for (Meal meal : meals) {
+			meal.setOrder(null);
+			this.manager.merge(meal);
+		}
 	}
-	public List<Customer> get() {
-		List<Customer> customers = this
-				.manager
-				.createQuery("select distinct c from Customer c left join fetch c.orders", Customer.class)
-				.getResultList();
-		return customers;
-	}
-	public Customer find(int id) {
-		Customer customer = (Customer) this
-				.manager
-				.createQuery("select distinct c from Customer c left join fetch c.orders o where c.id = :id")
-				.setParameter("id", id)
-				.getSingleResult();
-		return customer;
-	}
-	public void delete(int id) {
-		Customer customer = this.manager.find(Customer.class, id);
-		this.manager.remove(customer);
-	}
-	public void update(Customer customerUpdated) {
-		Customer customer = this.manager.find(Customer.class, customerUpdated.getId());
-		customer.setName(customerUpdated.getName());
-		customer.setSurname(customerUpdated.getSurname());
-		customer.setTable_number(customerUpdated.getTable_number());
-		customer.setOrders(customerUpdated.getOrders());
-		this.manager.merge(customer);
-	}*/
 }
