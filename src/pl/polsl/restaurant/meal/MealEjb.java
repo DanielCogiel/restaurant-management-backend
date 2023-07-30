@@ -26,12 +26,14 @@ public class MealEjb {
 		
 		for (IngredientAmount ingredientData : ingredients) {
 			Ingredient ingredient = this.manager.find(Ingredient.class, ingredientData.getIngredientId());
-			Include include = new Include();
-			include.setAmount(ingredientData.getAmount());
-			include.setUnit(ingredientData.getUnit());
-			include.setIngredient(ingredient);
-			include.setMeal(meal);
-			this.manager.persist(include);
+			if (ingredient != null) {
+				Include include = new Include();
+				include.setIngredient(ingredient);
+				include.setAmount(ingredientData.getAmount());
+				include.setUnit(ingredientData.getUnit());
+				include.setMeal(meal);
+				this.manager.persist(include);
+			}
 		}
 	}
 	public List<MealDto> get() {
@@ -71,22 +73,22 @@ public class MealEjb {
 //		this.clearIncludes(meal);
 		for (IngredientAmount ingredientData : ingredients) {
 			Ingredient ingredient = this.manager.find(Ingredient.class, ingredientData.getIngredientId());
-			Include include = new Include();
-			include.setAmount(ingredientData.getAmount());
-			include.setUnit(ingredientData.getUnit());
-			
 			if (ingredient != null) {
+				Include include = new Include();
+				include.setAmount(ingredientData.getAmount());
+				include.setUnit(ingredientData.getUnit());
 				include.setIngredient(ingredient);
+				include.setMeal(meal);
+				this.manager.persist(include);
 			}
-			
-			include.setMeal(meal);
-			this.manager.persist(include);
 		}
 		manager.merge(meal);
 	}
 	public void delete(int id) {
 		Meal meal = this.manager.find(Meal.class, id);
-		manager.remove(meal);
+		if (meal != null) {
+			manager.remove(meal);
+		}
 	}
 	private void clearIncludes(Meal meal) {	
 		List<Include> includes = meal.getIncludes();

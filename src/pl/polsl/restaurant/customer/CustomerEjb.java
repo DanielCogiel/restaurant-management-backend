@@ -31,14 +31,18 @@ public class CustomerEjb {
 	}
 	public void delete(int id) {
 		Customer customer = this.manager.find(Customer.class, id);
-		this.manager.remove(customer);
+		if (customer != null) {
+			this.manager.remove(customer);
+		}
 	}
 	public void update(Customer customerUpdated) {
 		Customer customer = this.manager.find(Customer.class, customerUpdated.getId());
-		customer.setName(customerUpdated.getName());
-		customer.setSurname(customerUpdated.getSurname());
-		customer.setTable_number(customerUpdated.getTable_number());
-		customer.setOrders(customerUpdated.getOrders());
-		this.manager.merge(customer);
+		if (customer != null) {
+			customer.setName(customerUpdated.getName());
+			customer.setSurname(customerUpdated.getSurname());
+			customer.setTable_number(customerUpdated.getTable_number());
+			customer.setOrders(customerUpdated.getOrders());
+			this.manager.merge(customer);
+		}
 	}
 }

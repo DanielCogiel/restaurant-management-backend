@@ -9,6 +9,7 @@ public class MealDtoNoIncludes {
 	private Spiciness spiciness;
 	private DietType dietType;
 	
+	public MealDtoNoIncludes() {}
 	public MealDtoNoIncludes(int id, String name, Spiciness spiciness, DietType dietType) {
 		this.id = id;
 		this.name = name;

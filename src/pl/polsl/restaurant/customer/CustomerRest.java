@@ -1,6 +1,7 @@
 package pl.polsl.restaurant.customer;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import pl.polsl.restaurant.customer.customerDtos.CustomerCreateDto;
 import pl.polsl.restaurant.customer.customerDtos.CustomerDto;
@@ -20,40 +22,28 @@ import pl.polsl.restaurant.customer.customerDtos.CustomerUpdateDto;
 @Path(value="customers")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
-public class CustomerRest implements CustomerRestInterface {
-	
-//	@Override
-//	@POST
-//	public CustomerDto create(CustomerCreateDto createCustomer) {
-//		return
-//	}
-	
+public class CustomerRest implements CustomerRestInterface {	
 	@EJB
 	CustomerEjb customerBean;
 	
 	@Override
 	@POST
-	public CustomerDto create(CustomerCreateDto createCustomer) {
-		Customer customer = new Customer();
-		customer.setName(createCustomer.getName());
-		customer.setSurname(createCustomer.getSurname());
-		customer.setTable_number(createCustomer.getTable_number());
-		this.customerBean.create(customer);
-		
-		CustomerDto customerData = new CustomerDto(customer.getId(),
-				customer.getName(), customer.getSurname(), customer.getTable_number(), customer.getOrders());
-		return customerData;
+	public Response create(CustomerCreateDto createCustomer) {
+		try {
+			Customer customer = new Customer();
+			customer.setName(createCustomer.getName());
+			customer.setSurname(createCustomer.getSurname());
+			customer.setTable_number(createCustomer.getTable_number());
+			this.customerBean.create(customer);
+			return Response.ok().entity("{\"message\":\"Klient zosta³ utworzony.\"}").build();
+		} catch (Exception e) {
+			return Response.status(500).entity("{\"message\":\"Nie uda³o siê utworzyæ klienta.\"}").build();
+		}
 	}
 	
 	@Override
 	@GET
 	public ArrayList<CustomerDto> get() {
-//		CustomerDto customer1 = new CustomerDto();
-//		CustomerDto customer2 = new CustomerDto();
-//		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
-//		customers.add(customer1);
-//		customers.add(customer2);
-		
 		List<Customer> customerEntities = this.customerBean.get();
 		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
 		
@@ -77,18 +67,18 @@ public class CustomerRest implements CustomerRestInterface {
 	@Override
 	@DELETE
 	@Path(value="/{id}/delete")
-	public NotifierDto delete(@PathParam("id") int id) {
+	public Response delete(@PathParam("id") int id) {
 		try {
 			this.customerBean.delete(id);
-			return new NotifierDto("Successfully deleted customer.");
+			return Response.ok().entity("{\"message\":\"Uda³o siê usun¹æ klienta.\"}").build();
 		} catch (Exception e) {
-			return new NotifierDto("Could not delete given customer.");
+			return Response.status(500).entity("{\"message\":\"Usuniêcie klienta nie powiod³o siê.\"}").build();
 		}
 	}
 	
 	@Override
 	@PUT
-	public NotifierDto update(CustomerUpdateDto updatedCustomer) {
+	public Response update(CustomerUpdateDto updatedCustomer) {
 		try {
 			Customer currentCustomer = this.customerBean.find(updatedCustomer.getId());
 			if (updatedCustomer.getName() != null) 
@@ -98,10 +88,9 @@ public class CustomerRest implements CustomerRestInterface {
 			if (updatedCustomer.getTable_number() != 0) 
 				currentCustomer.setTable_number(updatedCustomer.getTable_number());
 			this.customerBean.update(currentCustomer);
-			return new NotifierDto("Successfully updated customer.");
+			return Response.ok().entity("{\"message\":\"Pomyœlnie zaktualizowano klienta.\"}").build();
 		} catch (Exception e) {
-			return new NotifierDto("Could not update given customer.");
+			return Response.status(500).entity("{\"message\":\"Nie uda³o siê zaktualizowaæ klienta.\"}").build();
 		}
 	}
-	
  }

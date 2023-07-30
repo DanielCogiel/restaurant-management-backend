@@ -28,29 +28,24 @@ public class MealRest implements MealRestInterface {
 	
 	@Override
 	@POST
-	public MealDtoNoIncludes create(MealCreateDto createMeal) {
-		Meal meal = new Meal();
-		meal.setName(createMeal.getName());
-		meal.setSpiciness(createMeal.getSpiciness());
-		meal.setDietType(createMeal.getDietType());
-		
-		this.mealBean.create(meal, createMeal.getIngredients());
-		
-		MealDtoNoIncludes mealData = new MealDtoNoIncludes(meal.getId(), meal.getName(), meal.getSpiciness(),
-				meal.getDietType());
-		return mealData;
+	public Response create(MealCreateDto createMeal) {
+		try {
+			Meal meal = new Meal();
+			meal.setName(createMeal.getName());
+			meal.setSpiciness(createMeal.getSpiciness());
+			meal.setDietType(createMeal.getDietType());
+			
+			this.mealBean.create(meal, createMeal.getIngredients());
+			return Response.ok().entity("{\"message\":\"Pomyœlnie utworzono nowy posi³ek.\"}").build();
+		} catch (Exception e) {
+			return Response.status(500).entity("{\"message\":\"Wyst¹pi³ problem ze stworzeniem posi³ku.\"}").build();
+		}
 	}
 	
 	@Override
 	@GET
 	public List<MealDto> get() {
 		List<MealDto> meals = this.mealBean.get();
-//		ArrayList<MealDto> meals = new ArrayList<MealDto>();
-		
-//		for (Meal meal : mealEntities) {
-//			meals.add(new MealDto(meal.getId(), meal.getName(), meal.getSpiciness(), meal.getDietType(), meal.getIncludes()));
-//		}
-		
 		return meals;
 	}
 	
@@ -59,22 +54,12 @@ public class MealRest implements MealRestInterface {
 	@Path(value = "/{id}")
 	public MealDto find(@PathParam("id") int id) {
 		MealDto meal = mealBean.find(id);
-		//Meal meal = this.mealBean.find(id);
-		//return new MealDto();
 		return meal;
 	}
 	
 	@Override
 	@PUT
 	@Path(value = "/{id}/edit")
-	//poni¿sza funkcja robi POST zamiast PUT
-	/*public Response update(@PathParam("id") int id, MealCreateDto meal)
-	{
-		mealBean.update(meal.fromDTO());
-		return Response.ok().build();
-	}
-	*/
-	//public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
 	public Response update(@PathParam("id") int id, MealUpdateDto updatedMeal) {
 		try {
 			Meal meal = this.mealBean.findEntity(id);
@@ -101,7 +86,7 @@ public class MealRest implements MealRestInterface {
         	mealBean.delete(id);
             return Response.ok().entity("{\"message\":\"Danie zosta³o usuniête.\"}").build();
         } catch(Exception e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Danie o podanym identyfikatorze nie zosta³o znalezione.\"}").build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Danie o podanym identyfikatorze nie zosta³o znalezione.\"}").build();
         }
 	}
 

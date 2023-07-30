@@ -27,16 +27,17 @@ public class IngredientRest implements IngredientRestInterface {
 	
 	@Override
 	@POST
-	public IngredientDto create(IngredientCreateDto createIngredient) {
-		Ingredient ingredient = new Ingredient();
-		ingredient.setName(createIngredient.getName());
-		ingredient.setGluten(createIngredient.isGluten());
-		
-		this.ingredientBean.create(ingredient);
-		
-		IngredientDto ingredientData = new IngredientDto(ingredient.getId(),
-				ingredient.getName(), ingredient.isGluten());
-		return ingredientData;
+	public Response create(IngredientCreateDto createIngredient) {
+		try {
+			Ingredient ingredient = new Ingredient();
+			ingredient.setName(createIngredient.getName());
+			ingredient.setGluten(createIngredient.isGluten());
+			this.ingredientBean.create(ingredient);
+			
+			return Response.ok().entity("{\"message\":\"Sk³adnik zosta³ pomyœlnie utworzony.\"}").build();
+		} catch (Exception e) {
+			return Response.status(500).entity("{\"message\":\"Nie uda³o siê utworzyæ sk³adnika.\"}").build();
+		}
 	}
 	
 	@Override
@@ -65,7 +66,6 @@ public class IngredientRest implements IngredientRestInterface {
 	@PUT
 	@Path(value = "/{id}/edit")
 	public Response update(@PathParam("id") int id, IngredientUpdateDto updatedIngredient) {
-        
 		try {
 			Ingredient ingredient = ingredientBean.find(id);
         
@@ -77,21 +77,18 @@ public class IngredientRest implements IngredientRestInterface {
             
             return Response.ok().entity("{\"message\":\"Sk³adnik zosta³ zaktualizowany.\"}").build();
         } catch(Exception e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Sk³adnik o podanym identyfikatorze nie zosta³ znaleziony.\"}").build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Sk³adnik o podanym identyfikatorze nie zosta³ znaleziony.\"}").build();
         }
     }
 
 	@DELETE
 	@Path(value = "/{id}/delete")
 	public Response delete(@PathParam("id") int id){
-//		Ingredient ingredient = ingredientBean.find(id);
         try {
         	ingredientBean.delete(id);
             return Response.ok().entity("{\"message\":\"Sk³adnik zosta³ usuniêty.\"}").build();
         } catch(Exception e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("{\"message\":\"Sk³adnik o podanym identyfikatorze nie zosta³ znaleziony.\"}").build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Sk³adnik o podanym identyfikatorze nie zosta³ znaleziony.\"}").build();
         }
 	}
-	
-
  }

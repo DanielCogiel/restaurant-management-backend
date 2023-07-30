@@ -7,6 +7,7 @@ public class IngredientAmountName {
 	private double amount;
 	private Unit unit;
 	
+	public IngredientAmountName() {};
 	public IngredientAmountName(String name, double amount, Unit unit) {
 		this.name = name;
 		this.amount = amount;

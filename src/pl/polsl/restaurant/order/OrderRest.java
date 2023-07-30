@@ -34,13 +34,14 @@ public class OrderRest implements OrderRestInterface {
 	
 	@Override
 	@POST
-	public OrderDto create(OrderCreateDto createOrder) {
-		Order order = new Order();
-		this.orderBean.create(order, createOrder.getUserId(), createOrder.getMeals());
-		
-		OrderDto orderData = new OrderDto(order.getId(),
-				order.getMeals(), order.getCustomer());
-		return orderData;
+	public Response create(OrderCreateDto createOrder) {
+		try {
+			Order order = new Order();
+			this.orderBean.create(order, createOrder.getUserId(), createOrder.getMeals());
+			return Response.ok().entity("{\"message\":\"Utworzono zamówienie.\"}").build();
+		} catch (Exception e) {
+			return Response.status(500).entity("{\"message\":\"Nie uda³o siê stworzyæ zamówienia.\"}").build();
+		}
 	}
 	
 	@Override

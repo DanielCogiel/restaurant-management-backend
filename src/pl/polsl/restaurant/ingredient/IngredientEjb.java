@@ -30,10 +30,14 @@ public class IngredientEjb {
 		return ingredient;
 	}
 	public void update(Ingredient ingredient) {
-		 manager.merge(ingredient);
+		if (ingredient != null) {
+			manager.merge(ingredient);
+		}
 	}
 	public void delete(int id) {
 		Ingredient ingredient = this.manager.find(Ingredient.class, id);
-		manager.remove(ingredient);
+		if (ingredient != null) {
+			manager.remove(ingredient);
+		}
 	}
 }

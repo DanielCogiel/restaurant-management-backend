@@ -19,13 +19,15 @@ public class OrderEjb {
 		Customer customer = this.manager.find(Customer.class, customerId);
 		if (customer != null) {
 			order.setCustomer(customer);	
-			manager.persist(order);
 		}
+		manager.persist(order);
 		
 		for (int mealId : mealsIds) {
 			Meal meal = this.manager.find(Meal.class, mealId);
-			meal.setOrder(order);
-			manager.merge(meal);
+			if (meal != null) {
+				meal.setOrder(order);
+				manager.merge(meal);
+			}
 		}
 	}
 	
@@ -55,13 +57,17 @@ public class OrderEjb {
 		this.clearMeals(order);
 		for (int mealId : mealsIds) {
 			Meal meal = this.manager.find(Meal.class, mealId);
-			meal.setOrder(order);
-			manager.merge(meal);
+			if (meal != null) {
+				meal.setOrder(order);
+				manager.merge(meal);
+			}
 		}
 	}
 	public void delete(int id) {
 		Order order = this.manager.find(Order.class, id);
-		manager.remove(order);
+		if (order != null) { 
+			manager.remove(order);
+		}
 	}
 	
 	private void clearMeals(Order order) {

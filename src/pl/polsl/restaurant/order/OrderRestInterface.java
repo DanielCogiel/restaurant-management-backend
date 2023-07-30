@@ -12,7 +12,7 @@ import pl.polsl.restaurant.order.OrderDtos.OrderNoRelations;
 
 @Local
 public interface OrderRestInterface {
-	public abstract OrderDto create(OrderCreateDto createOrder);
+	public abstract Response create(OrderCreateDto createOrder);
 	public abstract OrderDto find(int id); //CustomerDto
 	public abstract ArrayList<OrderDto> get();
 	public abstract Response update(int id, OrderUpdateDto updatedOrder);
