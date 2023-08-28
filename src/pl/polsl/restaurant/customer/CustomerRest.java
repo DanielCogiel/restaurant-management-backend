@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -78,9 +79,10 @@ public class CustomerRest implements CustomerRestInterface {
 	
 	@Override
 	@PUT
-	public Response update(CustomerUpdateDto updatedCustomer) {
+	@Path(value = "/{id}/edit")
+	public Response update(@PathParam("id") int id, CustomerUpdateDto updatedCustomer) {
 		try {
-			Customer currentCustomer = this.customerBean.find(updatedCustomer.getId());
+			Customer currentCustomer = this.customerBean.find(id);
 			if (updatedCustomer.getName() != null) 
 				currentCustomer.setName(updatedCustomer.getName());
 			if (updatedCustomer.getSurname() != null) 

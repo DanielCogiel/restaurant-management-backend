@@ -14,6 +14,6 @@ public interface CustomerRestInterface {
 	public abstract Response create(CustomerCreateDto createCustomer);
 	public abstract CustomerDto find(int id); //CustomerDto
 	public abstract ArrayList<CustomerDto> get();
-	public abstract Response update(CustomerUpdateDto updatedCustomer);
+	public abstract Response update(int id, CustomerUpdateDto updatedCustomer);
 	public abstract Response delete(int id);
 }

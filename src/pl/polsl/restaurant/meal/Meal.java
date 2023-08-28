@@ -85,7 +85,6 @@ public class Meal implements Serializable {
         dto.setName(name);
         dto.setSpiciness(spiciness);
         dto.setDietType(dietType);
-        dto.setIncludes(includes);
 
         return dto;
     }
